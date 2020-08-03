@@ -12,16 +12,15 @@ services:
         networks:
             - test01
     app:
+        depends_on:
+          - mysql
+          - nginx
         build:
-            args:
-                user: testuser
-                uid: 1000
             context: ./docker/php-fpm
             dockerfile: Dockerfile
         image: test01
         container_name: test-app
         restart: unless-stopped
-        working_dir: /var/www/
         environment:
             DB_HOST: ${DB_HOST}
             DB_DATABASE: ${DB_DATABASE}
